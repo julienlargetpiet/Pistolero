@@ -14,10 +14,12 @@ Clone it in `your_path`
 $ cd your_path && rustc main.rs -o pistolero
 ```
 
-You can now create a bash alias like:
+You can now create a bash func like:
 
 ```
-alias pistolero="cd your_path && ./pistolero"
+pistolero() {
+  (cd your_path && ./out "$@")
+}
 ```
 
 # Commands
