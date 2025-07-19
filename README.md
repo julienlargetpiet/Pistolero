@@ -66,6 +66,18 @@ pistolero see
 pistolero see_sort_date 'lock:min_date|max_date,order:asc_or_desc,n:number_of_tasks_to_print'
 ```
 
+## Example
+
+```
+$ pistolero see_sort_date "order:asc,n:8,lock:01-01-2012|12-12-2040"
+     TASK NAME     |     STATUS      |     LEVEL      |     DEADLINE
+Task5              | false           | 4              | 12-12-2012
+Task2              | false           | 2              | 02-01-2026
+Task3              | true            | 2              | 01-11-2026
+Task1              | false           | 2              | 02-12-2026
+Task4              | false           | 1              | 01-11-2035
+```
+
 ## SEE LEVEL SORTED METHODS
 
 ```
