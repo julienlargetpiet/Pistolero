@@ -32,7 +32,7 @@ impl FromStr for Commands {
       "see_sort_level" => Ok(Commands::SeeLevel),
       "help" => Ok(Commands::Help),
       "verif" => Ok(Commands::Verify),
-      _ => Err("Invalid command".to_string()),
+      _ => Err(format!("Invalid command '{}'", s.to_string())),
     }
   }
 }
@@ -116,10 +116,10 @@ fn parse_deadline(cur_deadline: String) -> Result<(u8, u8, u16), String> {
   Ok((day, month, year))
 }
 
-fn extract_arg(x: &Vec<String>, n: usize, target: usize) -> Result<String, String> {
+fn extract_arg(n: usize, target: usize) -> Result<(), String> {
   match n != target {
     true => Err("Too much or not enough args, consider calling the help command".to_string()),
-    false => Ok(x[target - 1].clone()),
+    false => Ok(()),
   }
 }
 
@@ -176,7 +176,7 @@ fn func_add(x: &String) -> Result<(), String> {
         .collect();
   iter_rslt.map_err(|e| e)?;
   if [&name, &status_string, &level_string, &deadline]
-    .iter()
+    .iter() 
     .any(|s| s.is_empty()) {
     return Err("Missing one or more fields".to_string());
   }
@@ -1169,43 +1169,43 @@ fn main () -> Result<(), String> {
 
   match cmd {
     Commands::Add => {
-      extract_arg(&args_v, n, 3).map_err(|err| err)?;
+      extract_arg(n, 3).map_err(|err| err)?;
       func_add(&args_v[2]).map_err(|err| err)?;
     },
     Commands::Remove => {
-      extract_arg(&args_v, n, 3).map_err(|err| err)?;
+      extract_arg(n, 3).map_err(|err| err)?;
       remove(&args_v[2]).map_err(|err| err)?;
     },
     Commands::UpdateStatus => {
-      extract_arg(&args_v, n, 4).map_err(|err| err)?;
+      extract_arg(n, 4).map_err(|err| err)?;
       update_status(&args_v[2], &args_v[3]).map_err(|err| err)?;
     },
     Commands::UpdateLevel => {
-      extract_arg(&args_v, n, 4).map_err(|err| err)?;
+      extract_arg(n, 4).map_err(|err| err)?;
       update_level(&args_v[2], &args_v[3]).map_err(|err| err)?;
     },
     Commands::UpdateDeadLine => {
-      extract_arg(&args_v, n, 4).map_err(|err| err)?;
+      extract_arg(n, 4).map_err(|err| err)?;
       update_deadline(&args_v[2], &args_v[3]).map_err(|err| err)?;
     },
     Commands::See => {
-      extract_arg(&args_v, n, 2).map_err(|err| err)?;
+      extract_arg(n, 2).map_err(|err| err)?;
       see()?;
     },
     Commands::SeeDate => {
-      extract_arg(&args_v, n, 3).map_err(|err| err)?;
+      extract_arg(n, 3).map_err(|err| err)?;
       see_date(&args_v[2])?;
     },
     Commands::SeeLevel => {
-      extract_arg(&args_v, n, 3).map_err(|err| err)?;
+      extract_arg(n, 3).map_err(|err| err)?;
       see_level(&args_v[2])?;
     },
     Commands::Verify => {
-      extract_arg(&args_v, n, 2).map_err(|err| err)?;
+      extract_arg(n, 2).map_err(|err| err)?;
       verify()?;
     },
     Commands::Help => {
-      extract_arg(&args_v, n, 2).map_err(|err| err)?;
+      extract_arg(n, 2).map_err(|err| err)?;
       help();
     },
   };
