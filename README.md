@@ -26,6 +26,7 @@ Clone it in `your_path`
 
 ```
 $ cd your_path && rustc main.rs -o pistolero
+$ touch tasks.txt
 ```
 
 You can now create a bash func like in your `.bashrc`:
